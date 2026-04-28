@@ -1,0 +1,72 @@
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "VT323", monospace;
+  --font-mono: "VT323", monospace;
+}
+
+@layer utilities {
+  .noise-overlay {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.12;
+    mix-blend-mode: color-dodge;
+    pointer-events: none;
+    animation: static-noise 0.2s infinite;
+  }
+
+  .scanlines {
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.4) 51%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 50;
+  }
+
+  .glitch-text {
+    position: relative;
+    text-shadow: 2px 0px #0ff, -2px 0px #f0f;
+    animation: text-glitch 2.5s infinite;
+  }
+
+  .jarring-border {
+    border: 3px solid #0ff;
+    box-shadow: 8px 8px 0px #f0f;
+  }
+
+  .jarring-border-alt {
+    border: 3px solid #f0f;
+    box-shadow: -8px 8px 0px #0ff;
+  }
+
+  .screen-tear {
+    animation: tear 3.5s infinite running;
+  }
+}
+
+@keyframes static-noise {
+  0% { background-position: 0 0; }
+  25% { background-position: 10% -10%; }
+  50% { background-position: -20% 5%; }
+  75% { background-position: 5% 15%; }
+  100% { background-position: 0 0; }
+}
+
+@keyframes text-glitch {
+  0%, 15%, 100% { text-shadow: 2px 0px #0ff, -2px 0px #f0f; transform: none; }
+  16% { text-shadow: -3px 0px #0ff, 3px 0px #f0f; transform: translate(-2px, 1px); }
+  17%, 65% { text-shadow: 2px 0px #0ff, -2px 0px #f0f; transform: none; }
+  66% { text-shadow: 5px 0px #f0f, -5px 0px #0ff; transform: translate(3px, -2px) skewX(5deg); }
+  68% { text-shadow: 2px 0px #0ff, -2px 0px #f0f; transform: none; }
+}
+
+@keyframes tear {
+  0%, 94%, 100% { transform: translateX(0) skewX(0deg); }
+  95% { transform: translateX(15px) skewX(-15deg); filter: invert(1); }
+  96% { transform: translateX(-10px) skewX(10deg); filter: blur(2px) hue-rotate(90deg); }
+  97% { transform: translateX(5px) skewX(0deg); filter: blur(0); }
+}
+
+body {
+  background-color: #050505;
+  color: #e0e0e0;
+}
